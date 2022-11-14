@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface ImageRepository extends CrudRepository<Long, Image> {
+public interface ImageRepository extends CrudRepository<Image, Long> {
 }

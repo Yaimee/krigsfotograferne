@@ -2,21 +2,29 @@ package com.example.krigsfotograferne.controller;
 
 import com.example.krigsfotograferne.model.Image;
 import com.example.krigsfotograferne.repository.ImageRepository;
+import com.example.krigsfotograferne.service.ImageService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.List;
+
+@CrossOrigin
 @RestController
 @AllArgsConstructor
 @RequestMapping("/images")
 public class ImageController {
-    private final ImageRepository imageRepository;
+    private final ImageService service;
 
+    @PostMapping
+    public ResponseEntity<Image> create(@Valid @RequestBody Image image) {
+        Image item = service.create(image);
+        return ResponseEntity.ok().body(item);
+    }
     @GetMapping
-    public ResponseEntity<Iterable<Image>> findAll() {
-        Iterable<Image> allImages = imageRepository.findAll();
+    public ResponseEntity<List<Image>> findAll() {
+        List<Image> allImages = (List<Image>) service.findAll();
         return ResponseEntity.ok().body(allImages);
     }
 }
